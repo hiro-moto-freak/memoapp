@@ -1,15 +1,31 @@
 <template>
   <div>
-    {{ hello }}
+    <ul>
+      <li v-for="memo in memos" :key="memo.id">
+        {{ memo.title }}: {{ memo.description }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      hello: "Hello, Vue.js 3.0",
+      memos: "memos",
     };
+  },
+
+  mounted() {
+    this.setMemo();
+  },
+
+  methods: {
+    setMemo: function () {
+      axios.get("/api/memos").then((response) => (this.memos = response.data));
+    },
   },
 };
 </script>
